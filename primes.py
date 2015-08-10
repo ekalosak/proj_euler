@@ -31,9 +31,11 @@ def _just_fac(pfac):
     return map(lambda pe: pe[0], pfac)
 
 def just_exp(n):
+    ''' only the exponents of the prime factorization of n'''
     return _just_exp(prime_factors(n))
 
 def just_fac(n):
+    ''' the prime factors of n '''
     return _just_fac(prime_factors(n))
 
 def test():
@@ -44,6 +46,8 @@ def test():
     assert just_exp(7) == [1, 1]
     assert just_fac(100) == [1, 2, 5]
     assert just_exp(100) == [1, 2, 2]
+    assert just_fac(1) == [1]
+    assert just_exp(1) == [1]
     print "Passed tests!!"
 
 if __name__ == '__main__':

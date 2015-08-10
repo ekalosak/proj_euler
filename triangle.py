@@ -5,12 +5,8 @@ def tri_next(t, n):
     return (t + n + 1, n + 1)
 
 def tri(n):
-    ''' find the n'th triange number '''
-    t1 = 1
-    n1 = 1
-    while n1 < n:
-        t1, n1 = tri_next(t1, n1)
-    return t1
+    ''' find the n'th triange number using gauss '''
+    return n*(n + 1)/2
 
 def tri_state(T):
     ''' given T list of first n=len(T) triangles, return list with next
