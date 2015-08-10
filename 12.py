@@ -13,25 +13,28 @@ import numpy as np
 
 # local imports
 from triangle import tri
-from divisors import num_divisors
+from divisors import num_div
 from testing import benchmark
 
 @benchmark
 def main(N):
     # want the first triangle number with more than N divisors
     n = 1
-    t = 1
     ndiv = 1
     while ndiv <= N:
         t = tri(n)
+        ndiv = num_div(t)
         n = n + 1
-        ndiv = num_divisors(t) 
-    return n, t, ndiv
+    return n - 1, t, ndiv
 
 def test():
-    assert main(5) == 5, 28, 6
+    assert main(5) == (7, 28, 6)    # case given in problem
+    assert main(1) == (2, 3, 2)
     print "Passed tests!!"
 
 if __name__ == '__main__':
     test()
-    main(500)
+    N = 500
+    n, t, d = main(N)
+    print "First traingle number with more than ", N, " divisors is ",\
+        t, ' with ', d, ' divisors.'
