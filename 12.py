@@ -14,17 +14,7 @@ import numpy as np
 # local imports
 from triangle import tri
 from divisors import num_divisors
-
-def benchmark(fxn):
-
-    def w_bmk(*args, **kw):
-        t0 = time.clock()
-        r = fxn(*args, **kw)
-        t1 = time.clock()
-        print "Function took ", t1-t0, " seconds."
-        return r
-
-    return w_bmk
+from testing import benchmark
 
 @benchmark
 def main(N):
@@ -40,12 +30,11 @@ def main(N):
             print n, t, ndiv
         n = n + 1
     print t, ' has ', ndiv, ' divisors.'
-    return t
+    return t, ndiv
 
 def test():
     assert main(5) == 28
     print "Passed tests!!"
-
 
 if __name__ == '__main__':
     test()
