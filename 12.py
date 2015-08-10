@@ -19,21 +19,17 @@ from testing import benchmark
 @benchmark
 def main(N):
     # want the first triangle number with more than N divisors
-    ndiv = 1
     n = 1
-    ndivmax = 1
-    while ndiv <= N:  # Until this loop reaches its goal
+    t = 1
+    ndiv = 1
+    while ndiv <= N:
         t = tri(n)
-        ndiv = num_divisors(t)
-        if ndiv > ndivmax:
-            ndivmax = ndiv
-            print n, t, ndiv
         n = n + 1
-    print t, ' has ', ndiv, ' divisors.'
-    return t, ndiv
+        ndiv = num_divisors(t) 
+    return n, t, ndiv
 
 def test():
-    assert main(5) == 28
+    assert main(5) == 5, 28, 6
     print "Passed tests!!"
 
 if __name__ == '__main__':
