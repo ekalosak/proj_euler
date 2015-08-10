@@ -1,1 +1,1 @@
-__all__ = ['primes', 'triangle']
+__all__ = ['primes', 'triangle', 'divisors', 'testing']
