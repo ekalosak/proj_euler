@@ -1,3 +1,5 @@
+from tree import tree
+
 def nxt(n):
     if n <= 0: raise ValueError("Can't handle non-natural values")
     elif n == 1: return 1
@@ -13,16 +15,15 @@ def seq(n):
     return s
 
 def maxlen1(N):
-    r = {}  # r[n] = nxt(n)
-    e = {}  # e[n] = len(seq(n))
     ''' for each n < N,
             calculate the collatz seq moving fwd from that
                 record the next number and leave a space for len
             when established len sequence is reached, backpropogate lengths
     '''
+    r = tree(None, (1, 1))  # tree of (n, l) 
+    computed_lengths = [1]
     for n in range(1, N):
-        u = []
-        if n in r: continue
+        if n in computed_lengths: continue
         else:
             pass    #TODO
     return r
