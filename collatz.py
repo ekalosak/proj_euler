@@ -1,5 +1,6 @@
 from tree import tree
 from stack import stack
+import pdb
 
 def nxt(n):
     ''' return the next value in the Collatz sequence '''
@@ -25,20 +26,52 @@ def seq(n):
     return s
 
 def maxlen1(N):
-    ''' for each n < N,
-            calculate the collatz seq moving fwd from that
-                record the next number and leave a space for len
-            when established len sequence is reached, backpropogate lengths
-    '''
-    r = tree(None, (1, 1))  # tree of (n, l) 
-    computed_lengths = [1]
-    for n in range(1, N):
-        if n in computed_lengths: continue
-        else:
-            pass    #TODO
-    return r
+
+    ''' calculate collatz tree forward brutishly
+    Initialize a list from 1..N
+    Calculate for each t in T
+    Once a number is encountered, add it to a dict with number
+        and length of chain.
+    When a number is encountered, add it to a stack
+    Return (n, l) number and length of number with longest
+        chain under or equal N (n <= N)'''
+
+    if not type(N) == int:
+        msg = "Value " + str(N) + " is not an integer"
+        raise ValueError(msg)
+    elif N <= 0:
+        msg = "Value " + str(N) + " is not greater than 0"
+        raise ValueError(msg)
+
+    if N == 1:
+        return (1, [1])
+    elif N == 2:
+        return (2, [2])
+
+    R = {1: 1, 2: 2, 4: 3}  # records lengths of chain, avoid obv cycle
+    T = range(N, 0, -1)
+
+    for k in R:
+        if k in T:
+            T.remove(k) # remove the already calculated chain lengths
+
+    while len(t) > 0:
+        n = T.pop()
+        inR = False
+        while not inR:
+            nx = nxt(n)
+            # TODO
+
+        if n in t:
+            t.remove(n) # so we know when we've calculated lens for all nums
+        s.push(prev(n)) # set up the previous elements in the seq
+
+    mxL = max(r.values())
+    mxN = [k for k in r if r[k] == mxL]
+    return (mxL, mxN)
 
 def maxlen2(N):
+
     ''' calculate collatz tree backwards brutishly
     Initialize a list from 1..N
     Calculate backwards from 1 -> 2 -> 4 -> (1,8) etc. 
@@ -46,27 +79,48 @@ def maxlen2(N):
         and length of chain.
     When a number is encountered, add it to a stack
     Return (n, l) number and length of number with longest
-        chain under N (n<N)'''
+        chain under or equal N (n <= N)'''
+
+    if not type(N) == int:
+        msg = "Value " + str(N) + " is not an integer"
+        raise ValueError(msg)
+    elif N <= 0:
+        msg = "Value " + str(N) + " is not greater than 0"
+        raise ValueError(msg)
+
+    if N == 1:
+        return (1, [1])
+    elif N == 2:
+        return (2, [2])
+
     r = {1: 1, 2: 2, 4: 3}  # records lengths of chain, avoid obv cycle
     s = stack([8])  # holds numbers to be computed
-    t = range(1,N)
+    t = range(1, N)
+
+    for k in r:
+        if k in t:
+            t.remove(k) # remove the already calculated chain lengths
+
     while len(t) > 0:
+        pdb.set_trace()
         n = s.pop() # get a number that has yet to have its len calcd
         nx = nxt(n) # check what its parent in the tree is
         r[n] = r[nx] + 1  # n's length is 1 + parent's length 
 
         if n in t:
             t.remove(n) # so we know when we've calculated lens for all nums
-                        # under N
         s.push(prev(n)) # set up the previous elements in the seq
 
+    mxL = max(r.values())
+    mxN = [k for k in r if r[k] == mxL]
+    return (mxL, mxN)
 
 def test():
     assert nxt(3) == 10
     assert nxt(2) == 1
     assert nxt(1) == 1
     assert seq(3) == [3, 10, 5, 16, 8, 4, 2, 1]
-    assert maxlen2(2) == (1, 1)
+    assert maxlen2(2) == (2, [2])
     assert maxlen2(10) == (9, len(seq(9)))
     print "Tests passed!!, maxlen1 not tested"
 
