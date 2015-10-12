@@ -2,6 +2,7 @@ import pdb
 import math
 
 def div(n):
+    # find the divisors of n
     r = []
     for k in range(1, int(n/2) + 1):
         if n % k == 0:
